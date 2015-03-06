@@ -1,0 +1,34 @@
+{
+  "name": "dashboard",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nim579/dashboard",
+  "authors": [
+    "Nck Iv <studio@nim579.ru>"
+  ],
+  "description": "Web sockets based frontend dashboard",
+  "main": [
+    "lib/dashboard.js",
+    "lib/dashboard.css"
+  ],
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "dashboard",
+    "websockets"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "backbone": "~1.1.2",
+    "underscore": "~1.8.2"
+  }
+}

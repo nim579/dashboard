@@ -1,0 +1,27 @@
+{
+  "name": "dashboard",
+  "version": "0.1.0",
+  "description": "Web sockets based frontend dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nim579/dashboard.git"
+  },
+  "author": "Nick Iv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nim579/dashboard/issues"
+  },
+  "homepage": "https://github.com/nim579/dashboard",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bower-concat": "^0.4.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

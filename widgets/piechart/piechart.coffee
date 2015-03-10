@@ -7,7 +7,7 @@ class Dashboard.widgets.piechart extends Dashboard.widgets.standart
 
         }
     initialize: ->
-        @view = new Dashboard.widgets.piechartView model: @
+        @view = new Dashboard.widgets.piechartView model: @, id: @id
 
 class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
     className: 'widget piechart'
@@ -30,7 +30,7 @@ class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
 
         if data.length > 0
             pieData = $.extend true, [], data
-            pieData[0].value = 0
+            pieData[0].value = 0 if dataFull.firstAll
 
             chart = d3.select(node).append("svg:svg")
                 .data([pieData])
@@ -42,14 +42,15 @@ class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
             #
             # Center label
             #
-            label_group = chart.append("svg:g")
-                .attr("dy", ".6em")
+            if dataFull.firstAll
+                label_group = chart.append("svg:g")
+                    .attr("dy", ".6em")
 
-            center_label = label_group.append("svg:text")
-                .attr("class", "chart_label")
-                .attr("text-anchor", "middle")
-                .attr('fill', '#ffffff')
-                .text(data[0].label + ' ' + data[0].value )
+                center_label = label_group.append("svg:text")
+                    .attr("class", "chart_label")
+                    .attr("text-anchor", "middle")
+                    .attr('fill', '#ffffff')
+                    .text(data[0].label + ' ' + data[0].value )
 
             arc = d3.svg.arc().innerRadius(radius * .6).outerRadius(radius)
             pie = d3.layout.pie().value((d) -> d.value)
@@ -61,7 +62,7 @@ class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
                 .attr("class", "slice")
 
             arcs.append("svg:path")
-                .attr("fill", (d, i) -> color(i) if i isnt 0)
+                .attr("fill", (d, i) -> color(i) unless i is 0 and dataFull.firstAll)
                 .attr("d", arc)
 
             #
@@ -79,7 +80,7 @@ class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
                 .enter()
                 .append("g")
                 .each((d, i) ->
-                    return if i is 0
+                    return if i is 0 and dataFull.firstAll
                     g = d3.select(@)
 
                     g.append("rect")

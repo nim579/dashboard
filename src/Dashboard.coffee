@@ -3,13 +3,17 @@ window.Dashboard = {} unless Dashboard?
 
 class Dashboard
     constructor: (config)->
-        @widgetCollection = new Dashboard.Widgets [], config
+        if config.widgets
+            @widgetCollection = new Dashboard.Widgets [], config
 
-        for widgetConfig in config.widgets
-            name = if Dashboard.widgets[widgetConfig.name]? then widgetConfig.name else 'standart'
-            widget = new Dashboard.widgets[name] _.extend {_dataId: widgetConfig.dataId}, widgetConfig.extra
+            for widgetConfig in config.widgets
+                name = if Dashboard.widgets[widgetConfig.name]? then widgetConfig.name else 'standart'
+                widget = new Dashboard.widgets[name] _.extend {_dataId: widgetConfig.dataId, id: widgetConfig.dataId}, widgetConfig.extra
 
-            @widgetCollection.add widget
+                @widgetCollection.add widget
+
+        else
+            @widgetCollection = new Dashboard.WidgetsServerConfig [], config
 
 
 Dashboard.Widgets = Backbone.Collection.extend
@@ -29,6 +33,15 @@ Dashboard.Widgets = Backbone.Collection.extend
             if model
                 model.set value: data[dataSet], last_update: new Date()
 
+Dashboard.WidgetsServerConfig = Dashboard.Widgets.extend
+    prepareData: (data)->
+        if data.widgets
+            for widget in data.widgets
+                name = if Dashboard.widgets[widget.name]? then widget.name else 'standart'
+                widget.id = widget.dataId
+                widgetModel = new Dashboard.widgets[name] _.extend widget, last_update: new Date()
+
+                @set widgetModel
 
 Dashboard.widgets = {}
 
@@ -65,6 +78,26 @@ Dashboard.utils =
 
         return newNum.toString().replace /\B(?=(\d{3})+(?!\d))/g, "&thinsp;"
 
+    animateValue: (oldValue, value, renderFn)->
+        if not value? or isNaN value
+            return false
+
+        timeout = 700
+        delay = 20
+        iterations = timeout / delay
+        
+        difference =  value - oldValue
+        trendUp = oldValue < value
+        step = Math.ceil difference/50
+
+        to = setInterval ->
+            oldValue += step
+            if (trendUp and oldValue >= value) or (not trendUp and oldValue <= value)
+                oldValue = value
+                clearInterval to
+
+            renderFn? oldValue
+        , delay
 
 class Dashboard.Client extends Backbone.Model
     initialize: (@config)->
@@ -79,14 +112,15 @@ class Dashboard.Client extends Backbone.Model
     connect: ->
         @_ws = new WebSocket @url @config
         @_bindWs()
-        @_updater()
+
+        @_updater() if @config.updateTime
 
     _bindWs: ->
         @_ws.onopen = =>
             @_ws.onmessage = (message)=>
                 @set @parse message.data
 
-            @update()
+            @update() if @config.updateTime
 
         @_ws.onerror = =>
             @_reconnect()
@@ -113,6 +147,9 @@ class Dashboard.Client extends Backbone.Model
         if typeof data is 'string'
             data = JSON.parse data
 
+        if _.isArray data.result
+            data = widgets: data.result
+        
         return data.result
 
 
@@ -144,7 +181,7 @@ Dashboard.widgets.standart = Backbone.Model.extend
         }
 
     initialize: ->
-        @view = new Dashboard.widgets.standartView model: @
+        @view = new Dashboard.widgets.standartView model: @, id: @id
 
 
 Dashboard.widgets.standartView = Backbone.View.extend

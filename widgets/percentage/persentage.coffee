@@ -12,9 +12,18 @@ class Dashboard.widgets.percentage extends Dashboard.widgets.standart
         }
 
     initialize: ->
-        @view = new Dashboard.widgets.percentageView model: @
+        @view = new Dashboard.widgets.percentageView model: @, id: @id
 
-    # Custom data schema
+    getTrend: ->
+        if @_previousAttributes.value
+            pervious = @_previousAttributes.value
+            current = @get('value')
+            # return (current.dividend / current.divider - pervious.dividend / pervious.divider)*100
+            return (current.large.current / current.all.current - pervious.large.current / pervious.all.current)*100
+
+        return 0
+
+    #XXX Custom data schema
     toJSON: ->
         data = _.extend {}, @attributes
 

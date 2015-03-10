@@ -1,12 +1,34 @@
 <!DOCTYPE>
 <html>
-	<head>
-		<title>Dashboard</title>
-		<script type="text/javascript" src="./static/libs.js"></script>
-		<script type="text/javascript" src="./static/app.js"></script>
-		<!-- <script type="text/javascript" src="./static/widgets.js"></script> -->
-	</head>
-	<body>
-		
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="./static/app.css">
+        <script type="text/javascript" src="./static/libs.js"></script>
+        <script type="text/javascript" src="./static/app.js"></script>
+        <script type="text/javascript" src="./static/widgets.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                window.app = new Dashboard({
+                    url: 'ws://10.33.26.14:8888',
+                    socketData: {
+                        request: "cashback_statistic",
+                        params: {}
+                    },
+                    widgets: [
+                        {name: 'percentage', dataId: 'transactions', extra: {label: 'Кешбеков от всех пополнений'}},
+                        {name: 'piechart', dataId: 'users', extra: {label: 'Участники акции'}},
+                        {name: 'meter', dataId: 'users_per_day', extra: {label: 'Количество участников за 24 часа', max: 100}},
+                        {name: 'table', dataId: 'payment_systems', extra: {label: 'Количество пополнений по платежным системам'}},
+                        {name: 'number', dataId: 'income', extra: {label: 'Сумма пополнений'}},
+                        {name: 'number', dataId: 'income_count', extra: {label: 'Количество пополнений кратных 500'}},
+                        {name: 'number', dataId: 'cashbacks_amount', extra: {label: 'Сумма кешбеков'}},
+                        {name: 'number', dataId: 'cashbacks', extra: {label: 'Количество кешбеков'}},
+                    ],
+                    updateTime: 5000
+                });
+            });
+        </script>
+    </head>
+    <body></body>
 </html>

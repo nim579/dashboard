@@ -1,0 +1,18 @@
+.grider-width(@n, @i: 1) when (@i < @n){
+	&.w-@{i} {
+		width: 100% / @n * @i;
+	}
+	.grider-width(@n, (@i + 1));
+}
+.grider-heght(@n, @i: 1) when (@i < @n){
+	&.h-@{i} {
+		height: 100% / @n * @i;
+	}
+	.grider-heght(@n, (@i + 1));
+}
+
+.element {
+	.grider-width(12);
+	.grider-heght(4);
+}
+

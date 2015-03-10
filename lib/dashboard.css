@@ -1,0 +1,147 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Ubuntu, "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #222;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  vertical-align: top;
+  font-size: 0px;
+}
+.element {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 50%;
+  height: 50%;
+  padding: 5px;
+  vertical-align: top;
+  font-size: 1rem;
+}
+.element-wrap {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.widget {
+  position: relative;
+  display: table-cell;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #47bbb3;
+}
+.widget .title {
+  font-size: 2em;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+}
+.widget .value {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #ffffff;
+}
+.widget .helpline {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.widget.mStatus_error {
+  background-color: #d52b2b;
+}
+.element.w-1 {
+  width: 8.33333333%;
+}
+.element.w-2 {
+  width: 16.66666667%;
+}
+.element.w-3 {
+  width: 25%;
+}
+.element.w-4 {
+  width: 33.33333333%;
+}
+.element.w-5 {
+  width: 41.66666667%;
+}
+.element.w-6 {
+  width: 50%;
+}
+.element.w-7 {
+  width: 58.33333333%;
+}
+.element.w-8 {
+  width: 66.66666667%;
+}
+.element.w-9 {
+  width: 75%;
+}
+.element.w-10 {
+  width: 83.33333333%;
+}
+.element.w-11 {
+  width: 91.66666667%;
+}
+.element.h-1 {
+  height: 25%;
+}
+.element.h-2 {
+  height: 50%;
+}
+.element.h-3 {
+  height: 75%;
+}
+
+.widget.meter {
+  background-color: #9c4274;
+}
+.widget.meter .value {
+  font-weight: 400;
+  font-size: 1.1em;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.widget.number {
+  background-color: #12b0c5;
+}
+.widget.number .value {
+  font-size: 5em;
+}
+
+.widget.percentage {
+  background-color: #a7d52b;
+}
+.widget.percentage .value {
+  font-size: 5em;
+}
+
+.widget.piechart {
+  background-color: #d29615;
+}
+.widget.piechart .value {
+  font-weight: 400;
+  font-size: 1.1em;
+}
+
+.widget.table table {
+  margin: 0 auto;
+}
+.widget.table td {
+  padding: 0 30px 0 0;
+  color: #fff;
+  font-size: 1.2em;
+}

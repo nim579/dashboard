@@ -1,7 +1,7 @@
 
 class Dashboard.widgets.meter extends Dashboard.widgets.standart
     initialize: ->
-        @view = new Dashboard.widgets.meterView model: @
+        @view = new Dashboard.widgets.meterView model: @, id: @id
 
 class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
     className: 'widget meter'
@@ -17,5 +17,7 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
             readOnly: true
             max: data.mas
             value: data.value
+            width: '50%'
+            height: '50%'
             fgColor: @$el.find('.value').css 'color'
             bgColor: @$el.find('.value').css 'background-color'

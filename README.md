@@ -53,13 +53,26 @@ $(function(){
     }
     ```
 * meter — draw [knob](http://anthonyterrien.com/knob/) from field specified in *dataId*. Support extra value `max` from widget settings.
+* clock — show clock. Field specified in *dataId* supported settings for [jqTime](https://github.com/nim579/jqTime) plugin. For use modes (default *current*) return field *mode*
+    ``` js
+    {
+        "mode": "current",
+        "utc": 1,
+        "exp": "hh/MM/ss"
+    }
+    ```
+* status — show text and change background by status. Shema in field specified in *dataId*:
+    ``` js
+    {
+        "status": "success", // warning, error
+        "text": "It's OK!"
+    }
+    ```
 
 ## Make custom widgets
 *Comming soon...*
 
 
-
 ## TODO
-* Smart resize for widgets
 * Beautiful data updating
 * More clients

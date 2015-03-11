@@ -156,14 +156,39 @@ class Dashboard.Client extends Backbone.Model
 class Dashboard.View extends Backbone.View
     el: 'body'
 
-    template: '<div class="container"></div>'
-    widgetTemplate: '<div class="element w-3 h-2"><div class="element-wrap"></div></div>'
+    template: '<div class="container w-<%= grid.w %> h-<%= grid.h %>"></div>'
+    widgetTemplate: '<div class="element"><div class="element-wrap"></div></div>'
+
+    presets: [
+        min: 1,  w: 1, h: 1
+    ,
+        min: 2,  w: 2, h: 1
+    ,
+        min: 3,  w: 2, h: 2
+    ,
+        min: 5,  w: 4, h: 2
+    ,
+        min: 9,  w: 3, h: 3
+    ,
+        min: 10, w: 4, h: 3
+    ,
+        min: 13, w: 5, h: 3
+    ,
+        min: 16, w: 4, h: 4
+    ,
+        min: 17, w: 5, h: 4
+    ]
 
     initialize: ->
         @listenTo @collection, 'add', @render
 
     render: ->
-        $container = $ @template
+        grid = _.first @presets
+        for preset in @presets
+            break if preset.min > @collection.length
+            grid = preset
+
+        $container = $(_.template(@template) grid: grid)
 
         for model in @collection.models
             if model.view
@@ -186,7 +211,19 @@ Dashboard.widgets.standart = Backbone.Model.extend
 
 Dashboard.widgets.standartView = Backbone.View.extend
     className: 'widget'
-    template: '<div class="title"><%= label %></div><span class="value"><%= value %></span><% if(typeof last_update != \'undefined\'){ %><div class="helpline">Last updated: <% print(last_update.toLocaleTimeString()) %></div><% } %>'
+    template: '''
+        <% if(typeof label != \'undefined\'){ %>
+            <div class="title"><%= label %></div>
+        <% } %>
+        <span class="value">
+            <% if(typeof value != \'undefined\'){ %>
+                <%= value %>
+            <% } %>
+        </span>
+        <% if(typeof last_update != \'undefined\'){ %>
+            <div class="helpline">Last updated: <% print(last_update.toLocaleTimeString()) %></div>
+        <% } %>
+    '''
 
     initialize: ->
         @listenTo @model, 'change', @render
@@ -199,6 +236,7 @@ Dashboard.widgets.standartView = Backbone.View.extend
         data = @getData()
         @$el.html _.template(@template) data
 
+        # XXX
         classes = @$el.attr 'class'
         statuses = _.filter classes.split(' '), (className)->
             return className.indexOf('mStatus_') > -1

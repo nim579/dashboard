@@ -1,18 +1,61 @@
-.grider-width(@n, @i: 1) when (@i < @n){
-	&.w-@{i} {
-		width: 100% / @n * @i;
-	}
+.grider-width(@n, @i: 1) when (@i <= @n){
+	
 	.grider-width(@n, (@i + 1));
 }
-.grider-heght(@n, @i: 1) when (@i < @n){
-	&.h-@{i} {
-		height: 100% / @n * @i;
+.grider(@n, @i: 1) when (@i <= @n){
+	&.w-@{i} {
+		.element {
+			width: 100% / @i;
+			.sizerSmall(@i);
+			.sizerBigger(@i);
+			.sizerBig(@i);
+		}
 	}
-	.grider-heght(@n, (@i + 1));
+	&.h-@{i} {
+		.element {
+			height: 100% / @i;
+			.sizerSmall(@i);
+		}
+	}
+	.grider(@n, (@i + 1));
 }
 
-.element {
-	.grider-width(12);
-	.grider-heght(4);
+.sizerSmall (@s) when (@s > 4){
+	font-size: .7rem;
 }
 
+.sizerBigger (@s) when (@s < 3){
+	font-size: 1.3rem;
+}
+
+.sizerBig (@s) when (@s <= 1){
+	font-size: 2rem;
+}
+
+.container {
+	.grider(5);
+}
+
+@media screen and (max-width: 1280px) {
+	html, body {
+		font-size: 0.7em;
+	}
+}
+@media screen and (max-height: 720px) {
+	html, body {
+		font-size: 0.7em;
+	}
+}
+@media screen and (max-width: 650px) {
+	.element {
+		width: 100% !important;
+		height: auto !important;
+		min-height: auto !important;
+		&-wrap {
+			height: auto;
+		}
+	}
+	.widget {
+		padding: 4em 15px 5em;
+	}
+}

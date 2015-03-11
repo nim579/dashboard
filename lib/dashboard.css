@@ -20,6 +20,8 @@ body {
   box-sizing: border-box;
   width: 50%;
   height: 50%;
+  min-width: 250px;
+  min-height: 250px;
   padding: 5px;
   vertical-align: top;
   font-size: 1rem;
@@ -43,16 +45,17 @@ body {
   font-size: 2em;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 12px;
+  margin-bottom: 0.4em;
 }
 .widget .value {
   font-size: 2.5em;
   font-weight: 700;
   color: #ffffff;
+  line-height: 1em;
 }
 .widget .helpline {
   position: absolute;
-  bottom: 12px;
+  bottom: 0.7em;
   left: 0;
   right: 0;
   font-size: 1em;
@@ -62,47 +65,52 @@ body {
 .widget.mStatus_error {
   background-color: #d52b2b;
 }
-.element.w-1 {
-  width: 8.33333333%;
+.container.w-1 .element {
+  width: 100%;
+  font-size: 1.3rem;
+  font-size: 2rem;
 }
-.element.w-2 {
-  width: 16.66666667%;
+.container.h-1 .element {
+  height: 100%;
 }
-.element.w-3 {
-  width: 25%;
-}
-.element.w-4 {
-  width: 33.33333333%;
-}
-.element.w-5 {
-  width: 41.66666667%;
-}
-.element.w-6 {
+.container.w-2 .element {
   width: 50%;
+  font-size: 1.3rem;
 }
-.element.w-7 {
-  width: 58.33333333%;
-}
-.element.w-8 {
-  width: 66.66666667%;
-}
-.element.w-9 {
-  width: 75%;
-}
-.element.w-10 {
-  width: 83.33333333%;
-}
-.element.w-11 {
-  width: 91.66666667%;
-}
-.element.h-1 {
-  height: 25%;
-}
-.element.h-2 {
+.container.h-2 .element {
   height: 50%;
 }
-.element.h-3 {
-  height: 75%;
+.container.w-3 .element {
+  width: 33.33333333%;
+}
+.container.h-3 .element {
+  height: 33.33333333%;
+}
+.container.w-4 .element {
+  width: 25%;
+}
+.container.h-4 .element {
+  height: 25%;
+}
+.container.w-5 .element {
+  width: 20%;
+  font-size: .7rem;
+}
+.container.h-5 .element {
+  height: 20%;
+  font-size: .7rem;
+}
+@media screen and (max-width: 1280px) {
+  html,
+  body {
+    font-size: 0.7em;
+  }
+}
+@media screen and (max-height: 720px) {
+  html,
+  body {
+    font-size: 0.7em;
+  }
 }
 
 .widget.meter {

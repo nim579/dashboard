@@ -49,9 +49,11 @@ sendMess = (ws)->
     if tcon >= 3
         tcon = 0
         data.result.widgets[1].value[0].value = 800
+        data.result.widgets[1].value[1].value = 500
 
     else
         data.result.widgets[1].value[0].value = 100
+        data.result.widgets[1].value[1].value = 1005
         tcon++
 
     ws.send JSON.stringify data

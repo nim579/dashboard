@@ -6,6 +6,7 @@ body {
   background-color: #222;
   margin: 0;
   padding: 0;
+  min-width: 320px;
 }
 .container {
   padding: 10px;
@@ -25,6 +26,7 @@ body {
   padding: 5px;
   vertical-align: top;
   font-size: 1rem;
+  overflow: auto;
 }
 .element-wrap {
   display: table;
@@ -112,6 +114,26 @@ body {
     font-size: 0.7em;
   }
 }
+@media screen and (max-width: 650px) {
+  .element {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  .element-wrap {
+    height: auto;
+  }
+  .widget {
+    padding: 4em 15px 5em;
+  }
+}
+
+.widget.clock {
+  background-color: #0e163d;
+}
+.widget.clock .value {
+  font-size: 5em;
+}
 
 .widget.meter {
   background-color: #9c4274;
@@ -121,6 +143,11 @@ body {
   font-size: 1.1em;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.3);
+}
+@media screen and (max-width: 650px) {
+  .widget.meter {
+    height: 300px;
+  }
 }
 
 .widget.number {
@@ -141,8 +168,71 @@ body {
   background-color: #d29615;
 }
 .widget.piechart .value {
+  display: inline-block;
   font-weight: 400;
   font-size: 1.1em;
+  width: 100%;
+}
+.widget.piechart .pie {
+  display: block;
+  margin: 0 auto;
+  min-height: 20px;
+  min-width: 20px;
+  width: 40%;
+}
+.widget.piechart .doughnut-legend {
+  display: inline-block;
+  list-style: outside none none;
+  position: relative;
+  padding: 0;
+  text-align: left;
+}
+.widget.piechart .doughnut-legend li {
+  border-radius: 0.2em;
+  cursor: default;
+  display: block;
+  margin-bottom: 0.2em;
+  padding: 0px 8px 0px 28px;
+  position: relative;
+}
+.widget.piechart .doughnut-legend li span {
+  border-radius: 0.2em;
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1em;
+}
+.h-2.w-2 .widget.piechart .pie {
+  width: 30%;
+}
+.h-1 .widget.piechart .pie {
+  width: 30%;
+}
+.h-4 .widget.piechart .pie {
+  width: 20%;
+}
+.w-5 .widget.piechart .pie {
+  width: 40%;
+}
+@media screen and (max-width: 650px) {
+  .h-4 .widget.piechart .pie {
+    width: 60%;
+  }
+}
+
+.widget.status {
+  background-color: #3d5fcb;
+}
+.widget.status.mStatus_success {
+  background-color: #00dd32;
+}
+.widget.status.mStatus_warning {
+  background-color: #dd9c00;
+}
+.widget.status.mStatus_error {
+  background-color: #dd1a00;
 }
 
 .widget.table table {

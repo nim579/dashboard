@@ -1,0 +1,24 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="./static/app.css">
+        <script type="text/javascript" src="./static/libs.js"></script>
+        <script type="text/javascript" src="./static/app.js"></script>
+        <script type="text/javascript" src="./static/widgets.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                window.app = new Dashboard({
+                    url: 'ws://127.0.0.1:8888',
+                    socketData: {
+                        request: "cashback_statistic",
+                        params: {}
+                    },
+                    // updateTime: 5000
+                });
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

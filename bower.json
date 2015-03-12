@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "homepage": "https://github.com/nim579/dashboard",
   "authors": [
     "Nck Iv <studio@nim579.ru>"
@@ -36,6 +36,7 @@
     "underscore": "~1.8.2",
     "d3": "~3.5.5",
     "jquery-knob": "~1.2.11",
-    "jqtime": "~2.3.2"
+    "jqtime": "~2.3.2",
+    "chartjs": "~1.0.2"
   }
 }

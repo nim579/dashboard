@@ -16,4 +16,4 @@ class Dashboard.widgets.clockView extends Dashboard.widgets.standartView
         data = @getData()
         data.mode = data.value.mode if data.value?.mode
 
-        @$el.find('.value').jqTime data.mode, _.extend {}, data.value
+        @$el.find('.value').text('').jqTime data.mode, _.extend {}, data.value

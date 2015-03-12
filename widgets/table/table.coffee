@@ -1,7 +1,6 @@
 
 class Dashboard.widgets.table extends Dashboard.widgets.standart
     initialize: ->
-        console.log 'tableView'
         @view = new Dashboard.widgets.tableView model: @, id: @id
 
 class Dashboard.widgets.tableView extends Dashboard.widgets.standartView

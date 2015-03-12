@@ -13,6 +13,7 @@ class Dashboard
                 @widgetCollection.add widget
 
         else
+            console.log 'WidgetsServerConfig'
             @widgetCollection = new Dashboard.WidgetsServerConfig [], config
 
 
@@ -33,15 +34,35 @@ Dashboard.Widgets = Backbone.Collection.extend
             if model
                 model.set value: data[dataSet], last_update: new Date()
 
+
 Dashboard.WidgetsServerConfig = Dashboard.Widgets.extend
     prepareData: (data)->
         if data.widgets
+            updates = []
             for widget in data.widgets
-                name = if Dashboard.widgets[widget.name]? then widget.name else 'standart'
-                widget.id = widget.dataId
-                widgetModel = new Dashboard.widgets[name] _.extend widget, last_update: new Date()
+                if @get(widget.dataId)
+                    widget.id = widget.dataId
+                    updates.push widget
 
-                @set widgetModel
+                else
+                    name = if Dashboard.widgets[widget.name]? then widget.name else 'standart'
+                    widget.id = widget.dataId
+                    widgetModel = new Dashboard.widgets[name] _.extend widget, last_update: new Date()
+                    widgetModel.on 'change:value', ->
+                        @set last_update: new Date()
+
+                    updates.push widgetModel
+
+            removedWidgets = @reject (model)->
+                return _.find data.widgets, (widget)->
+                    return model.id is widget.dataId
+
+            @remove removedWidgets
+            @set updates
+
+    updated: (model)->
+        model.set last_update: new Date()
+
 
 Dashboard.widgets = {}
 
@@ -95,6 +116,7 @@ Dashboard.utils =
             if (trendUp and oldValue >= value) or (not trendUp and oldValue <= value)
                 oldValue = value
                 clearInterval to
+                to = null
 
             renderFn? oldValue
         , delay
@@ -113,16 +135,19 @@ class Dashboard.Client extends Backbone.Model
         @_ws = new WebSocket @url @config
         @_bindWs()
 
-        @_updater() if @config.updateTime
-
     _bindWs: ->
         @_ws.onopen = =>
             @_ws.onmessage = (message)=>
                 @set @parse message.data
 
-            @update() if @config.updateTime
+            if @config.updateTime
+                @update()
+                @_updater()
 
         @_ws.onerror = =>
+            @_reconnect()
+
+        @_ws.onclose = =>
             @_reconnect()
 
     _updater: ->
@@ -149,7 +174,7 @@ class Dashboard.Client extends Backbone.Model
 
         if _.isArray data.result
             data = widgets: data.result
-        
+
         return data.result
 
 
@@ -180,7 +205,7 @@ class Dashboard.View extends Backbone.View
     ]
 
     initialize: ->
-        @listenTo @collection, 'add', @render
+        @listenTo @collection, 'add remove', @render
 
     render: ->
         grid = _.first @presets

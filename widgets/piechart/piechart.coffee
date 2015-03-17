@@ -18,11 +18,9 @@ class Dashboard.widgets.piechartView extends Dashboard.widgets.standartView
     initialize: ->
         @listenTo @model, 'change', ->
             if @_fakeRendered
-                console.log 'chr'
                 @render()
 
             else
-                console.log 'chu'
                 @updateChart()
 
         @listenToOnce @model, 'add', @render

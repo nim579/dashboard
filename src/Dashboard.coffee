@@ -151,6 +151,7 @@ class Dashboard.Client extends Backbone.Model
             @_reconnect()
 
     _updater: ->
+        clearTimeout @_updaterTO if @_updaterTO?
         @_updaterTO = setTimeout =>
             @update()
             @_updater()

@@ -165,9 +165,9 @@ class Dashboard.Client extends Backbone.Model
         , 2000
 
     update: ->
-        udid = Dashboard.utils.getGuid()
-
-        @_ws.send JSON.stringify _.extend {tag: udid}, @config.socketData
+        if @_ws.readyState is 1
+            udid = Dashboard.utils.getGuid()
+            @_ws.send JSON.stringify _.extend {tag: udid}, @config.socketData
 
     parse: (data)->
         if typeof data is 'string'

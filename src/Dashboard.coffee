@@ -121,6 +121,14 @@ Dashboard.utils =
             renderFn? oldValue
         , delay
 
+    getTime: (date)->
+        unless date instanceof Date
+            date = new Date date
+
+        time = date.toTimeString()
+        return time.split(' ')[0]
+
+
 class Dashboard.Client extends Backbone.Model
     initialize: (@config)->
         @connect()
@@ -216,13 +224,19 @@ class Dashboard.View extends Backbone.View
 
         $container = $(_.template(@template) grid: grid)
 
+        views = []
         for model in @collection.models
             if model.view
                 $widget = $ @widgetTemplate
                 $widget.find('.element-wrap').html model.view.$el
                 $container.append $widget
+                views.push model.view
 
         @$el.html $container
+
+        for view in views
+            view.trigger 'readyForRender'
+            view.readyForRender = true
 
 
 Dashboard.widgets.standart = Backbone.Model.extend
@@ -247,7 +261,7 @@ Dashboard.widgets.standartView = Backbone.View.extend
             <% } %>
         </span>
         <% if(typeof last_update != \'undefined\'){ %>
-            <div class="helpline">Last updated: <% print(last_update.toLocaleTimeString()) %></div>
+            <div class="helpline">Last updated: <% print(Dashboard.utils.getTime(last_update)) %></div>
         <% } %>
     '''
 

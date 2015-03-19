@@ -1,6 +1,36 @@
 WebSocketServer = require('ws').Server
+_ = require 'underscore'
 
 wss = new WebSocketServer port: 8888
+
+mdata = [
+    {movie: 'Интерстеллар', status: 'success'},
+    {movie: '300 спартанцев', status: 'success'},
+    {movie: 'Мстители', status: 'success'},
+    {movie: 'Гравитайия', status: 'success'},
+    {movie: 'Бёрдмэн', status: 'success'},
+    {movie: 'Снайпер', status: 'success'},
+    {movie: 'Игра в иммитацию', status: 'success'},
+    {movie: 'Отель Гранд Будапешт', status: 'success'},
+    {movie: 'Левиафан', status: 'success'},
+    {movie: 'Город героев', status: 'success'},
+    {movie: 'Ярость', status: 'success'},
+    {movie: 'Хоббит 1', status: 'success'},
+    {movie: 'Большие глаза', status: 'success'},
+    {movie: 'Люси', status: 'success'},
+    {movie: 'Сирена', status: 'warning'},
+    {movie: 'Дракула', status: 'success'},
+    {movie: 'Отрочество', status: 'success'},
+    {movie: 'Стражи галактики', status: 'success'},
+    {movie: 'Бегущий в лабиринте', status: 'success'},
+    {movie: 'Капитан Америка', status: 'success'},
+    {movie: 'Капитан Филлипс', status: 'success'},
+    {movie: 'Грань будущего', status: 'success'},
+    {movie: 'Великий уравнитель', status: 'error'},
+    {movie: 'Живая сталь', status: 'success'},
+    {movie: 'Пряности и страсти', status: 'success'}
+]
+statuses = ['success', 'warning', 'error']
 
 
 wss.on 'connection', (ws)->
@@ -25,37 +55,38 @@ wss.on 'connection', (ws)->
 
     sendMess ws
 
+moviesCount = 5
+# setInterval ->
+#     moviesCount = _.random(1, 7)
+# , 10000
+
 con = 0
 tcon = 0
 sendMess = (ws)->
+    movies = getMovies()
+    stat = generateStatistic movies
+    movies.unshift name: 'piechart', dataId: '__statistic__', value: stat
     data =
         tag: 'asd'
         result: 
-            widgets: [
-                name: 'table', dataId: 'store', label: 'seta', value: [
-                    {"label": "set1_long_string_to_test", "value": 100},
-                    {"label": "set2", "value": 100500}
-                ]
-            ,
-                name: 'piechart', dataId: 'pie', firstAll: false, value: [
-                    {"label": "set1", "value": 100},
-                    {"label": "set2", "value": 1005},
-                    {"label": "set3", "value": 505},
-                ]
-            ,
-                name: 'clock', dataId: 'sup', value: wrap: false, exp: 'HH:MM.SS', utc: 4
-            ]
-
-    if tcon >= 3
-        tcon = 0
-        data.result.widgets[1].value[0].value = 800
-        data.result.widgets[1].value[1].value = 500
-
-    else
-        data.result.widgets[1].value[0].value = 100
-        data.result.widgets[1].value[1].value = 1005
-        tcon++
+            widgets: movies
 
     ws.send JSON.stringify data
-        
+
+getMovies = ->
+    return _.map mdata.slice(0, moviesCount), (movie)->
+        return name: 'status', dataId: movie.movie, value: text: movie.movie, status: statuses[_.random(0, statuses.length - 1)]
+
+generateStatistic = (movies)->
+    statusGroups = _.groupBy movies, (movie)->
+        return movie.value.status
+
+    stat = []
+    for status of statusGroups
+        stat.push {label: status, value: statusGroups[status].length}
+
+    return stat
+
+
+
 

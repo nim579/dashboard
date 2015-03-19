@@ -5,7 +5,7 @@ class Dashboard.widgets.table extends Dashboard.widgets.standart
 
 class Dashboard.widgets.tableView extends Dashboard.widgets.standartView
     className: 'widget table'
-    template: '<div class="title"><%= label %></div><span class="value"></span><% if(typeof last_update != \'undefined\'){ %><div class="helpline">Last updated: <% print(last_update.toLocaleTimeString()) %></div><% } %>'
+    template: '<div class="title"><%= label %></div><span class="value"></span><% if(typeof last_update != \'undefined\'){ %><div class="helpline">Last updated: <% print(Dashboard.utils.getTime(last_update)) %></div><% } %>'
 
     render: ->
         data = @getData()

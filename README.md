@@ -68,6 +68,13 @@ $(function(){
         "text": "It's OK!"
     }
     ```
+* list — show list of strings from field specified in *dataId*:
+    ``` js
+    [
+        {"label": "set1"},
+        {"label": "set2"},
+        ...
+    ]
 
 ## Make custom widgets
 *Comming soon...*

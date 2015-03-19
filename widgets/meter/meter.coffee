@@ -5,7 +5,7 @@ class Dashboard.widgets.meter extends Dashboard.widgets.standart
 
 class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
     className: 'widget meter'
-    template: '<div class="title"><%= label %></div><input type="text" class="value" value="<%= value %>"><% if(typeof last_update != \'undefined\'){ %><div class="helpline">Last updated: <% print(last_update.toLocaleTimeString()) %></div><% } %>'
+    template: '<div class="title"><%= label %></div><input type="text" class="value" value="<%= value %>"><% if(typeof last_update != \'undefined\'){ %><div class="helpline">Last updated: <% print(Dashboard.utils.getTime(last_update)) %></div><% } %>'
 
     render: ->
         super()

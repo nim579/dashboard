@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Web sockets based frontend dashboard",
   "main": "index.js",
   "scripts": {

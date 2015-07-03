@@ -135,6 +135,18 @@ body {
   font-size: 5em;
 }
 
+.widget.list {
+  background-color: #8dcc20;
+}
+.widget.list ul {
+  text-align: left;
+  font-size: 0.5em;
+  font-weight: normal;
+}
+.widget.list li {
+  line-height: 1.3em;
+}
+
 .widget.meter {
   background-color: #9c4274;
 }

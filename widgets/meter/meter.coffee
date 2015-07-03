@@ -15,7 +15,7 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
             angleArc: 270
             angleOffset: 225
             readOnly: true
-            max: data.mas
+            max: data.max
             value: data.value
             width: '50%'
             height: '50%'

@@ -224,6 +224,8 @@ class Dashboard.View extends Backbone.View
 
         $container = $(_.template(@template) grid: grid)
 
+        @$el.html $container
+
         views = []
         for model in @collection.models
             if model.view
@@ -231,8 +233,6 @@ class Dashboard.View extends Backbone.View
                 $widget.find('.element-wrap').html model.view.$el
                 $container.append $widget
                 views.push model.view
-
-        @$el.html $container
 
         for view in views
             view.trigger 'readyForRender'

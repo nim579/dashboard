@@ -35,7 +35,6 @@
     "backbone": "~1.1.2",
     "underscore": "~1.8.2",
     "d3": "~3.5.5",
-    "jquery-knob": "~1.2.11",
     "jqtime": "~2.3.2",
     "chartjs": "~1.0.2"
   }

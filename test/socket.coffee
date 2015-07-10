@@ -64,8 +64,8 @@ con = 0
 tcon = 0
 sendMess = (ws)->
     movies = getMovies()
-    stat = generateStatistic movies
-    movies.unshift name: 'piechart', dataId: '__statistic__', value: stat
+    stat = _.random 100000000
+    movies.unshift name: 'meter', dataId: '__statistic__', value: stat, max: 100000000, label: 'test test'
     data =
         tag: 'asd'
         result: 

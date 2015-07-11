@@ -11,9 +11,11 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
         <div class="meter-progress" max="<%= max %>" value="<%= value %>">
             <div class="meter-progress-bar" style="width: <%= percents %>%;"></div>
         </div>
-        <div class="meter-nums">
-            <%= nums.value %> / <%= nums.max %> (<%= nums.percents %>%)
-        </div>
+        <% if(typeof extra !== 'undefined' && extra.show_numbers){ %>
+            <div class="meter-nums">
+                <%= nums.value %> / <%= nums.max %> (<%= nums.percents %>%)
+            </div>
+        <% } %>
 
         <% if(typeof last_update != \'undefined\'){ %>
             <div class="helpline">Last updated: <% print(Dashboard.utils.getTime(last_update)) %></div>
@@ -22,6 +24,7 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
 
     getData: ->
         data = @model.toJSON()
+        console.log data
 
         data.percents = data.value / data.max  * 100
         data.nums =
@@ -35,14 +38,3 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
         super()
 
         data = @getData()
-        console.log data
-        # @$el.find('.value').knob
-        #     angleArc: 270
-        #     angleOffset: 225
-        #     readOnly: true
-        #     max: data.max
-        #     value: data.value
-        #     width: '50%'
-        #     height: '50%'
-        #     fgColor: @$el.find('.value').css 'color'
-        #     bgColor: @$el.find('.value').css 'background-color'

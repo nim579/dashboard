@@ -22,7 +22,6 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
 
     getData: ->
         data = @model.toJSON()
-        console.log data
 
         data.percents = data.value / data.max  * 100
         data.nums =

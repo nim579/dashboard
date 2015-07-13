@@ -1,5 +1,6 @@
 WebSocketServer = require('ws').Server
 _ = require 'underscore'
+fs = require 'fs'
 
 wss = new WebSocketServer port: 8888
 
@@ -70,6 +71,7 @@ sendMess = (ws)->
         tag: 'asd'
         result: 
             widgets: movies
+            version: JSON.parse(fs.readFileSync('./package.json').toString()).version
 
     ws.send JSON.stringify data
 

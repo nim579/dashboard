@@ -13,14 +13,15 @@ class Dashboard
                 @widgetCollection.add widget
 
         else
-            console.log 'WidgetsServerConfig'
             @widgetCollection = new Dashboard.WidgetsServerConfig [], config
 
 
 Dashboard.Widgets = Backbone.Collection.extend
     initialize: (models, @config)->
+        @preRender()
         @client = new Dashboard.Client @config
         @view = new Dashboard.View collection: @
+        @systemView = new Dashboard.SystemView model: @client
 
         @listenTo @client, 'dataUpdated', (changed)->
             console.log 'changed', changed
@@ -33,6 +34,9 @@ Dashboard.Widgets = Backbone.Collection.extend
 
             if model
                 model.set value: data[dataSet], last_update: new Date()
+
+    preRender: ->
+        $('body').html '<div id="system"></div><div id="layout"></div>'
 
 
 Dashboard.WidgetsServerConfig = Dashboard.Widgets.extend
@@ -130,21 +134,28 @@ Dashboard.utils =
 
 
 class Dashboard.Client extends Backbone.Model
+    defaults:
+        version: null
+
     initialize: (@config)->
         @connect()
 
         @on 'change', ->
             @trigger 'dataUpdated', @changed
 
+        @on 'change:version', @versionCanged
+
     url: (config)->
         return config.url
 
     connect: ->
+        @trigger 'connecting'
         @_ws = new WebSocket @url @config
         @_bindWs()
 
     _bindWs: ->
         @_ws.onopen = =>
+            @trigger 'connected'
             @_ws.onmessage = (message)=>
                 @set @parse message.data
 
@@ -167,10 +178,12 @@ class Dashboard.Client extends Backbone.Model
 
     _reconnect: ->
         console.log 'Connection error'
+        clearTimeout @_reconnectTO
+        @trigger 'disconnected'
 
-        setTimeout =>
+        @_reconnectTO = setTimeout =>
             @connect()
-        , 2000
+        , 5000
 
     update: ->
         if @_ws.readyState is 1
@@ -186,9 +199,12 @@ class Dashboard.Client extends Backbone.Model
 
         return data.result
 
+    versionCanged: ->
+        if @_previousAttributes.version?
+            window.location.reload()
 
 class Dashboard.View extends Backbone.View
-    el: 'body'
+    el: '#layout'
 
     template: '<div class="container w-<%= grid.w %> h-<%= grid.h %>"></div>'
     widgetTemplate: '<div class="element"><div class="element-wrap"></div></div>'
@@ -237,6 +253,46 @@ class Dashboard.View extends Backbone.View
         for view in views
             view.trigger 'readyForRender'
             view.readyForRender = true
+
+
+class Dashboard.SystemView extends Backbone.View
+    el: '#system'
+
+    initialize: ->
+        console.log @model
+        @listenTo @model, 'disconnected', =>
+            @render 'disconnected'
+
+        @listenTo @model, 'connecting', =>
+            @render 'connecting'
+
+        @listenTo @model, 'connected', =>
+            @render 'connected'
+
+    render: (event)->
+        $alert = $ '<div class="system-alert"></div>'
+        render = false
+
+        if event is 'connecting'
+            $alert.addClass 'mWarning mStripes'
+            $alert.text 'Connecting...'
+            render = true
+
+        if event is 'disconnected'
+            $alert.addClass 'mError mStripes'
+            $alert.text 'Disconnected!'
+            render = true
+
+        if event is 'connected'
+            $alert.text 'Connected'
+            @_TO = setTimeout =>
+                @$el.hide 400
+            , 2000
+
+            render = true
+
+        @$el.html($alert) if render
+        @$el.show 400
 
 
 Dashboard.widgets.standart = Backbone.Model.extend

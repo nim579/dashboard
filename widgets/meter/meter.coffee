@@ -11,11 +11,9 @@ class Dashboard.widgets.meterView extends Dashboard.widgets.standartView
         <div class="meter-progress" max="<%= max %>" value="<%= value %>">
             <div class="meter-progress-bar" style="width: <%= percents %>%;"></div>
         </div>
-        <% if(typeof extra !== 'undefined' && extra.show_numbers){ %>
-            <div class="meter-nums">
-                <%= nums.value %> / <%= nums.max %> (<%= nums.percents %>%)
-            </div>
-        <% } %>
+        <div class="meter-nums">
+            <% if(typeof extra !== 'undefined' && extra.show_numbers){ %><%= nums.value %> / <%= nums.max %> — <% } %><%= nums.percents %>%
+        </div>
 
         <% if(typeof last_update != \'undefined\'){ %>
             <div class="helpline">Last updated: <% print(Dashboard.utils.getTime(last_update)) %></div>

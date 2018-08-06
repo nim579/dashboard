@@ -1,0 +1,9 @@
+.widget(class=(status ? 'm_status_'+status : ''))
+    .widget__content
+        if label
+            .widget__label= label
+
+        if value != null
+            .widget__value!= value
+
+    .widget__bar Last updated: !{moment().format('DD.MM.YYYY HH:mm:ss')}

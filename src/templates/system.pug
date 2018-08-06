@@ -1,0 +1,12 @@
+case status
+    when 'error'
+        .system.js_alert.m_error.m_stripes Connection error!
+        
+    when 'disconnected'
+        .system.js_alert.m_error.m_stripes Disconnected!
+        
+    when 'connecting'
+        .system.js_alert.m_warning.m_stripes Connecting...
+
+    when 'connected'
+        .system.js_alert.m_success Connected

@@ -3,7 +3,7 @@ body {
   width: 100%;
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  background-color: #222;
+  background-color: #0F1E28;
   margin: 0;
   padding: 0;
   min-width: 320px;
@@ -229,7 +229,8 @@ body {
   padding: 15px;
   max-width: 100%;
   box-sizing: border-box;
-  background-color: #3c3c96;
+  border-radius: 10px;
+  background-color: #112330;
   word-wrap: break-word;
 }
 .widget__content {
@@ -259,7 +260,7 @@ body {
   position: relative;
   max-width: 100%;
   font-size: 4rem;
-  font-weight: 700;
+  font-weight: 300;
   color: white;
   line-height: 1em;
   text-align: center;
@@ -285,17 +286,17 @@ body {
 .widget__subvalue.m_status_success {
   color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-  background-color: #50c850;
+  background-color: #3BAB06;
 }
 .widget__subvalue.m_status_warning {
   color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-  background-color: #dc7832;
+  background-color: #E79F03;
 }
 .widget__subvalue.m_status_error {
   color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-  background-color: #c83232;
+  background-color: #E70303;
 }
 .widget__bar {
   position: absolute;
@@ -308,39 +309,27 @@ body {
   max-width: 100%;
 }
 .widget.m_status_success {
-  background-color: #50c850;
+  background-color: #0a4008;
 }
 .widget.m_status_warning {
-  background-color: #dc7832;
+  background-color: #4d3c0d;
 }
 .widget.m_status_error {
-  background-color: #c83232;
+  background-color: #5e0a0a;
 }
 
-.widgetClock {
-  background-color: #000011;
-}
 .widgetClock .widget__value {
   font-size: 7rem;
 }
 
-.widgetNumber {
-  background-color: #7b98b3;
-}
 .widgetNumber .widget__value {
   font-size: 8rem;
 }
 
-.widgetPercentage {
-  background-color: #59647a;
-}
 .widgetPercentage .widget__value {
   font-size: 8rem;
 }
 
-.widgetProgress {
-  background-color: #897979;
-}
 .widgetProgress .widget__value {
   width: 100%;
 }

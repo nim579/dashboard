@@ -30,3 +30,7 @@ node_modules
 bower_components
 test/static
 
+dev
+build
+lib
+*.old

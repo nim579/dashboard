@@ -1,0 +1,51 @@
+.widgetProgress {
+    .widget__value {
+        width: 100%;
+    }
+
+    &__progress {
+        position: relative;
+        display: block;
+        width: 70%;
+        border-radius: 1rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+        height: 5rem;
+        margin: 2rem auto 1rem;
+        overflow: hidden;
+
+        background-image: -webkit-linear-gradient(to bottom, rgba(235, 235, 235, 0.2) 0, rgba(245, 245, 245, 0.2) 100%);
+        background-image: -moz-linear-gradient(to bottom, rgba(235, 235, 235, 0.2) 0, rgba(245, 245, 245, 0.2) 100%);
+        background-image: linear-gradient(to bottom, rgba(235, 235, 235, 0.2) 0, rgba(245, 245, 245, 0.2) 100%);
+        background-repeat: repeat-x;
+
+        &_value {
+            display: block;
+            width: 0;
+            height: 100%;
+
+            background-color: #ededed;
+            background-image: -webkit-linear-gradient(to bottom, #ededed 0, #e2e2e2 100%);
+            background-image: -moz-linear-gradient(to bottom, #ededed 0, #e2e2e2 100%);
+            background-image: linear-gradient(to bottom, #ededed 0, #e2e2e2 100%);
+            background-repeat: repeat-x;
+
+            box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+            transition: width 0.8s ease 0s;
+        }
+        &:after {
+            content: attr(data-value);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+            font-size: 1.6rem;
+            color: fade(black, 75%);
+            line-height: 1em;
+            text-align: center;
+            text-shadow: 0 1px 1px fade(white, 50%);
+        }
+    }
+}

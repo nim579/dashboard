@@ -1,59 +1,63 @@
 module.exports = (grunt)->
-    
-    grunt.loadNpmTasks 'grunt-bower-concat'
-    grunt.loadNpmTasks 'grunt-contrib-coffee'
+    grunt.loadNpmTasks 'grunt-browserify'
     grunt.loadNpmTasks 'grunt-contrib-less'
     grunt.loadNpmTasks 'grunt-contrib-watch'
+    grunt.loadNpmTasks 'node-srv'
 
     grunt.initConfig
-        bower_concat:
-            dev:
-                dest: 'test/static/libs.js'
-                cssDest: 'test/static/libs.css'
-                dependencies:
-                    backbone: ['jquery', 'underscore']
-
-        coffee:
-            dev:
-                options:
+        browserify:
+            options:
+                transform: [
+                    'coffeeify'
+                    'pugify'
+                ]
+                browserifyOptions:
                     bare: true
+                    extensions: ['.coffee', '.pug', '.js']
 
+            dev:
                 files:
-                    './test/static/app.js': ['./src/**/*.coffee']
-                    './test/static/widgets.js': ['./widgets/**/*.coffee']
+                    "dev/dashboard.js": ["browser.coffee"]
 
-            build:
-                options:
-                    bare: true
-
+            module:
                 files:
-                    './lib/dashboard.js': ['./src/**/*.coffee', './widgets/**/*.coffee']
+                    "lib/dashboard.js": ["./src/index.coffee"]
+
+            browser:
+                files:
+                    "app/dashboard.js": ["browser.coffee"]
 
         less:
             dev:
-                options:
-                    paths: ['./']
-
                 files:
-                    './test/static/app.css': ['./src/styles/global.less', './widgets/**/*.less']
+                    'dev/dashboard.css': ['src/styles/index.less', 'src/widgets/**/*.less']
 
-            build:
-                options:
-                    paths: ['./src/styles']
-
+            module:
                 files:
-                    './lib/dashboard.css': ['./src/styles/global.less', './widgets/**/*.less']
+                    'lib/dashboard.css': ['src/styles/index.less', 'src/widgets/**/*.less']
+
+            browser:
+                files:
+                    'app/dashboard.css': ['src/styles/index.less', 'src/widgets/**/*.less']
 
         watch:
             coffee:
-                files: ['./src/**/*.coffee', './widgets/**/*.coffee']
-                tasks: ['coffee:dev']
+                files: ['./src/**/*.coffee', './src/**/*.pug']
+                tasks: ['browserify:dev']
 
             less:
-                files: ['./src/styles/**/*.less', './widgets/**/*.less']
+                files: ['./src/**/*.less']
                 tasks: ['less:dev']
 
+        srv:
+            dev:
+                port: 8000
+                root: './dev'
 
-    grunt.registerTask 'compile', 'Compile project', ['bower_concat:dev', 'coffee:dev', 'less:dev']
-    grunt.registerTask 'build', 'Build project for production', ['coffee:build', 'less:build']
 
+    grunt.registerTask 'dev', 'Run project for dev', ->
+        grunt.config.data.srv.dev.keepalive = false
+        grunt.task.run ['browserify:dev', 'less:dev', 'srv:dev', 'watch']
+
+    grunt.registerTask 'module', 'Build project like npm module', ['browserify:module', 'less:module']
+    grunt.registerTask 'browser', 'Build project for browser useage', ['browserify:browser', 'less:browser']

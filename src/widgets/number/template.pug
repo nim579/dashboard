@@ -1,0 +1,56 @@
+-var _trends = ['positive', 'negative']
+-var _downtrend = null
+-var _prev_value = null
+-var _percents = null
+-var _trend = null
+-var _trend_status = null
+
+if previous && previous.value
+    - _downtrend = previous.downtrend ? previous.downtrend : 'negative'
+    - _prev_value = previous.value
+
+    - _percents = Math.abs(value - previous.value) / previous.value
+    - _percents = Math.round(_percents*10000)/100
+    
+    if _downtrend == 'positive'
+        - _trends.reverse()
+    
+    if value > previous.value
+        - _trend = _trends[0]
+        
+    else if value < previous.value
+        - _trend = _trends[1]
+        - _percents *= -1
+    
+if _trend
+    if _trend == 'positive'
+        - _trend_status = 'success'
+
+    else if _trend == 'negative'
+        - _trend_status = 'error'
+
+.widget.widgetNumber(class=(status ? 'm_status_'+status : ''))
+    .widget__content
+        if label
+            .widget__label= label
+
+        if value != null
+            .widget__value
+                if full_number
+                    != Utils.beautifyNumber(value)
+
+                else
+                    != Utils.shortenedNumber(value)
+
+            if _prev_value
+                .widget__subvalue(class=(_trend_status ? 'm_status_'+_trend_status : ''))
+                    if full_number
+                        | prev: !{Utils.beautifyNumber(_prev_value)}
+
+                    else
+                        | prev: !{Utils.shortenedNumber(_prev_value)}
+
+                    if _percents
+                        |  (!{_percents}%)
+
+    .widget__bar Last updated: !{moment().format('DD.MM.YYYY HH:mm:ss')}

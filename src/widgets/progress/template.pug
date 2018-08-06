@@ -1,0 +1,29 @@
+.widget.widgetProgress(class=(status ? 'm_status_'+status : ''))
+    .widget__content
+        if label
+            .widget__label= label
+
+        if value != null
+            -var _percents = 0
+            -var _bar_percents = 0
+            - max = max || 0
+
+            if value == 0
+                - _percents = 0
+
+            else
+                - _percents = (value / max) * 100
+
+            if _percents > 100
+                - _bar_percents = 100
+
+            else
+                - _bar_percents = _percents
+
+            .widget__value
+                .widgetProgress__progress(data-value=_percents.toFixed(2)+'%')
+                    .widgetProgress__progress_value.js_value(style={width: _prev_value}, data-value=_bar_percents+'%')
+
+                .widget__subvalue !{Utils.shortenedNumber(value)} / !{Utils.shortenedNumber(max)}
+
+    .widget__bar Last updated: !{moment().format('DD.MM.YYYY HH:mm:ss')}

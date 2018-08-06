@@ -1,0 +1,6 @@
+.widget.widgetClock(class=(status ? 'm_status_'+status : ''))
+    .widget__content
+        if label
+            .widget__label= label
+
+        .widget__value= moment().format(format ? format : 'HH:mm:ss')

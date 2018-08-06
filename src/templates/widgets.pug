@@ -1,0 +1,13 @@
+.layout
+    -var _cols = Math.ceil(Math.sqrt(widgets.length))
+    -var _rows = Math.ceil(widgets.length / _cols)
+    -var _dummys = (_cols * _rows) % widgets.length
+
+    each widget in widgets
+        .layout__item(data-partial='widget', data-partial-id=widget)
+
+    if _dummys > 0
+        -var _d = 0
+        while _d < _dummys
+            .layout__item
+            - _d++

@@ -1,0 +1,125 @@
+.widget {
+    position: relative;
+
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: column;
+    flex-direction: column;
+
+    -webkit-align-items: center;
+    align-items: center;
+
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+
+    padding: 15px;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: @colors[widget];
+    word-wrap: break-word;
+
+    &__content {
+        position: relative;
+
+        display: -webkit-flex;
+        display: flex;
+
+        -webkit-flex-direction: column;
+        flex-direction: column;
+
+        -webkit-align-items: center;
+        align-items: center;
+
+        -webkit-justify-content: center;
+        justify-content: center;
+
+        width: 100%;
+        margin: auto;
+    }
+    &__label {
+        display: block;
+        max-width: 100%;
+        margin-bottom: 0.4em;
+
+        font-size: 3.2rem;
+        font-weight: 400;
+
+        color: fade(white, 70%);
+
+        text-align: center;
+        text-shadow: 0 1px 1px fade(black, 50%);
+    }
+    &__value {
+        position: relative;
+        max-width: 100%;
+
+        font-size: 4rem;
+        font-weight: 300;
+
+        color: white;
+        line-height: 1em;
+        text-align: center;
+        text-shadow: 0 1px 1px fade(black, 50%);
+    }
+    &__subvalue {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-top: 0.75em;
+        padding: 0.4em 0.6em;
+        border-radius: 0.4em;
+
+        font-size: 1.4rem;
+        font-weight: 400;
+
+        color: fade(white, 70%);
+        line-height: 1em;
+        white-space: nowrap;
+        text-align: center;
+        text-shadow: 0 1px 1px fade(black, 50%);
+
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+
+        &.m_status {
+            &_success {
+                color: fade(white, 90%);
+                box-shadow: 0 1px 1px fade(black, 50%);
+                background-color: @colors[success];
+            }
+            &_warning {
+                color: fade(white, 90%);
+                box-shadow: 0 1px 1px fade(black, 50%);
+                background-color: @colors[warning];
+            }
+            &_error {
+                color: fade(white, 90%);
+                box-shadow: 0 1px 1px fade(black, 50%);
+                background-color: @colors[error];
+            }
+        }
+    }
+    &__bar {
+        position: absolute;
+        bottom: 0.7em;
+        left: 0;
+        right: 0;
+        font-size: 1.2rem;
+        color: fade(black, 30%);
+        text-align: center;
+        max-width: 100%;
+    }
+    &.m_status {
+        &_success {
+            background-color: @colors[widget_success];
+        }
+        &_warning {
+            background-color: @colors[widget_warning];
+        }
+        &_error {
+            background-color: @colors[widget_error];
+        }
+    }
+}

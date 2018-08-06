@@ -1,0 +1,15 @@
+.widget.widgetPercentage(class=(status ? 'm_status_'+status : ''))
+    .widget__content
+        if label
+            .widget__label= label
+
+        if dividend != null && divider != null
+            -var value = dividend / divider
+            - value = Math.round((value)*10000)/100
+
+            if value > 150
+                - value = Math.round(value)
+
+            .widget__value !{value}%
+
+    .widget__bar Last updated: !{moment().format('DD.MM.YYYY HH:mm:ss')}

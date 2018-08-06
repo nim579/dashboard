@@ -1,0 +1,6 @@
+/src/
+/app/
+/dev/
+/test/
+.git*
+*.coffee

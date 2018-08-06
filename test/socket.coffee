@@ -36,7 +36,7 @@ statuses = ['success', 'warning', 'error']
 
 wss.on 'connection', (ws)->
     to = null
-    console.log 'connected', wss.clients.length
+    console.log 'connected', wss.clients.size
 
     ws.on 'message', (mes)->
         console.log('received: %s', mes);
@@ -44,40 +44,79 @@ wss.on 'connection', (ws)->
 
     ws.on 'error', ->
         console.log 'error', arguments
-        clearInterval to
 
     ws.on 'close', ->
         console.log 'disconnect', arguments
-        clearInterval to
 
-    to = setInterval ->
-        sendMess ws
-    , 3000
+    sendMess()
 
-    sendMess ws
+setInterval ->
+    sendMess()
+, 3000
 
-moviesCount = 5
+widgetsCount = 1
+
+
+prev = 0
 # setInterval ->
 #     moviesCount = _.random(1, 7)
 # , 10000
 
 con = 0
 tcon = 0
-sendMess = (ws)->
-    movies = getMovies()
+sendMess = ->
+    widgets = getMovies()
     stat = _.random 100000000
-    movies.unshift name: 'meter', dataId: '__statistic__', value: stat, max: 100000000, label: 'test test'
+
+    widgets.unshift
+        name: 'percentage'
+        id: '__pw__'
+        label: 'Percentage widget'
+        divider: _.random 100
+        dividend: _.random 100
+
+    widgets.unshift
+        name: 'progress'
+        id: '__psw__'
+        label: 'Progress widget'
+        value: _.random 1200
+        max: 1000
+
+    widgets.unshift
+        name: 'number'
+        id: '__nw__'
+        label: 'Number widget'
+        value: stat
+        previous: value: prev
+
+    widgets.unshift
+        name: 'clock'
+        id: '__cw__'
+        label: null
+        format: null
+
+    prev = stat
+    # widgets.unshift name: 'meter', id: '__statistic__', label: 'test test', value: stat, max: 100000000
+
+    widgets = widgets.slice 0, widgetsCount
+
     data =
-        tag: 'asd'
-        result: 
-            widgets: movies
+        id: 'asd'
+        error: null
+        result:
+            widgets: widgets
             version: JSON.parse(fs.readFileSync('./package.json').toString()).version
 
-    ws.send JSON.stringify data
+    wss.clients.forEach (ws)->
+        ws.send JSON.stringify data
+
+    widgetsCount++
+    widgetsCount %= 19
+    widgetsCount = 6
 
 getMovies = ->
-    return _.map mdata.slice(0, moviesCount), (movie)->
-        return name: 'status', dataId: movie.movie, value: text: movie.movie, status: statuses[_.random(0, statuses.length - 1)]
+    return _.map mdata, (movie)->
+        return name: 'status', id: movie.movie, value: movie.movie, status: statuses[_.random(0, statuses.length - 1)]
 
 generateStatistic = (movies)->
     statusGroups = _.groupBy movies, (movie)->
@@ -88,7 +127,3 @@ generateStatistic = (movies)->
         stat.push {label: status, value: statusGroups[status].length}
 
     return stat
-
-
-
-

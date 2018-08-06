@@ -1,0 +1,46 @@
+@keyframes progress-bar-stripes {
+    0% {
+        background-position: 3.5em 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.system {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 15px;
+
+    background-color: #5cb85c;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.5);
+
+    font-size: 15px;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 0 1px 1px #000000;
+    line-height: 1em;
+
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 100;
+
+    &.m_stripes {
+        background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+        background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+        background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+        background-size: 3.5em 3.5em;
+    }
+    &.m_warning {
+        background-color: #f0ad4e;
+        animation: 1.2s linear 0s infinite progress-bar-stripes;
+    }
+    &.m_error {
+        background-color: #d9534f;
+    }
+    &.m_visible {
+        opacity: 1;
+    }
+}
